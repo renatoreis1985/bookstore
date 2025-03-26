@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers # type: ignore
 
 from order.models import Order
 from product.models import Product
@@ -6,9 +6,9 @@ from product.serializers.product_serializer import ProductSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=True, read_only=True)
-    product_id = serializers.PrimaryKeyRelatedField(
-        queryset=Product.objects.all(), many=True, write_only=True
+    product = ProductSerializer(read_only=True, many=True)
+    products_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), write_only=True, many=True
     )
     total = serializers.SerializerMethodField()
 
@@ -26,7 +26,6 @@ class OrderSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop("user")
 
         order = Order.objects.create(user=user_data)
-
         for product in product_data:
             order.product.add(product)
 
