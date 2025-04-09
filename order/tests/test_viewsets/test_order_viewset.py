@@ -1,27 +1,31 @@
 import json
-
 from django.urls import reverse
-from rest_framework import status # type: ignore
-from rest_framework.test import APIClient, APITestCase # type: ignore
+from rest_framework import status
+from rest_framework.test import APITestCase
+from rest_framework.authtoken.models import Token
 
 from order.factories import OrderFactory, UserFactory
 from order.models import Order
 from product.factories import CategoryFactory, ProductFactory
-from product.models import Product
 
 
 class TestOrderViewSet(APITestCase):
-
-    client = APIClient()
-
     def setUp(self):
+        # Criação de usuário e autenticação
+        self.user = UserFactory()
+        self.token = Token.objects.create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.token.key}")
+
+        # Criação de categoria e produto para o pedido
         self.category = CategoryFactory(title="technology")
         self.product = ProductFactory(
             title="mouse", price=100, category=[self.category]
         )
-        self.order = OrderFactory(product=[self.product])
 
     def test_order(self):
+        # Cria um pedido para o teste de listagem
+        self.order = OrderFactory(user=self.user, product=[self.product])
+
         response = self.client.get(
             reverse("order-list", kwargs={"version": "v1"}))
 
@@ -43,9 +47,10 @@ class TestOrderViewSet(APITestCase):
         )
 
     def test_create_order(self):
-        user = UserFactory()
-        product = ProductFactory()
-        data = json.dumps({"products_id": [product.id], "user": user.id})
+        data = json.dumps({
+            "products_id": [self.product.id],
+            "user": self.user.id
+        })
 
         response = self.client.post(
             reverse("order-list", kwargs={"version": "v1"}),
@@ -55,4 +60,7 @@ class TestOrderViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        created_order = Order.objects.get(user=user)
+        # Recupera o último pedido criado
+        created_order = Order.objects.filter(user=self.user).latest("id")
+        self.assertEqual(created_order.user, self.user)
+        self.assertIn(self.product, created_order.product.all())
