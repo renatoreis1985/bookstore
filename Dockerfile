@@ -39,11 +39,11 @@ RUN apt-get update \
         build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN curl -sSL https://install.python-poetry.org | python
+RUN curl -sSL https://install.python-poetry.org | python3
 
 # install postgres dependencies inside of Docker
 RUN apt-get update \
-    && apt-get -y install libpq-dev gcc \
+    && apt-get -y install libpq-dev gcc git \
     && pip install psycopg2
 
 # copy project requirement files here to ensure they will be cached.
@@ -64,5 +64,5 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
 
