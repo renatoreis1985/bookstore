@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-f*k@=53bc5!shef1-6w+m$-g)kspbaljz%8k4(j7iuc-u2_dyd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ebac-bookstore-api.herokuapp.com', 'drsantos20.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'renato-bookstore-api-43677a1e6ddb.herokuapp.com']
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    
 ]
 
 ROOT_URLCONF = "bookstore.urls"
@@ -77,6 +78,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "bookstore.wsgi.application"
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Database
@@ -162,7 +167,7 @@ DEBUG = int(os.environ.get("DEBUG", default=1))
 # Se não for definido, usa os hosts padrão para desenvolvimento.
 ALLOWED_HOSTS = os.environ.get(
     "DJANGO_ALLOWED_HOSTS",
-    "localhost 127.0.0.1"
+    "localhost [127.0.0.1", "renato-bookstore-api-43677a1e6ddb.herokuapp.com]"
 ).split(" ")
 
 
