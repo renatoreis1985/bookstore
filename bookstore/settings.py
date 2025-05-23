@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-f*k@=53bc5!shef1-6w+m$-g)kspbaljz%8k4(j7iuc-u2_dyd"
+SECRET_KEY = "django-insecure-54vmmtm92s)9sbl!g77^v0(a884&i)c-*xh#91$g2-69$pir&x"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,18 +156,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-f*k@=53bc5!shef1-6w+m$-g)kspbaljz%8k4(j7iuc-u2_dyd"
-)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEBUG = int(os.environ.get("DEBUG", default=1))
-
-# 'DJANGO_ALLOWED_HOSTS' deve ser uma string com os hosts separados por espaço.
-# Se não for definido, usa os hosts padrão para desenvolvimento.
-ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS",
-    "localhost [127.0.0.1", "renato-bookstore-api-43677a1e6ddb.herokuapp.com]"
-).split(" ")
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
