@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "51b440412685c11283006bcd2d35898f5c51c1f8"
+SECRET_KEY = "django-insecure-54vmmtm92s)9sbl!g77^v0(a884&i)c-*xh#91$g2-69$pir&x"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
