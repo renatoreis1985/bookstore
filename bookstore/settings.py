@@ -13,6 +13,7 @@ SECRET_KEY = "django-insecure-54vmmtm92s)9sbl!g77^v0(a884&i)c-*xh#91$g2-69$pir&x
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -23,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -32,6 +34,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 
 ROOT_URLCONF = "bookstore.urls"
 
