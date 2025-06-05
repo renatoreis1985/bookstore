@@ -2,7 +2,7 @@
 name = "bookstore"
 version = "0.1.0"
 description = ""
-authors = ["renato <renato@teste.com>"]
+authors = ["renato <renato.bh.reis@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
